@@ -39,13 +39,13 @@ namespace pixivDesktop
             headEl.AppendChild(scriptEl);
             pixivBrowser.Document.InvokeScript("desktopView");
 
-            // 修改结束
-            MessageBox.Show("OK");
-
             // 截图
             Bitmap desktopImg = new Bitmap(1600, 900);
             pixivBrowser.DrawToBitmap(desktopImg, new Rectangle(0, 0, 1600, 900));
             desktopImg.Save(@"test.bmp");
+
+            // 修改结束
+            MessageBox.Show("OK");
         }
 
         private void btn_toPixiv_Click(object sender, EventArgs e)
