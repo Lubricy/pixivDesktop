@@ -14,6 +14,7 @@ namespace pixivDesktop
     public partial class Form1 : Form
     {
         String fileNameStr = "";
+        bool flag_SaveOK = true;
         public Form1()
         {
             InitializeComponent();
@@ -56,6 +57,9 @@ namespace pixivDesktop
         // 网站加载完成之后执行的方法
         private void pixivBrowser_DecumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
+            // 如果已经保存过，则直接退出
+            if (flag_SaveOK) return;
+
             // 执行js
             execJs();
 
@@ -77,11 +81,15 @@ namespace pixivDesktop
             {
                 text_Statement.Text = "截图失败...文件夹没有读写的权限...";
             }
+
+            // 将加载完成的标识符设为true
+            flag_SaveOK = true;
         }
 
         // 按下"生成图片"按钮，保存图片
         private void btn_toPixiv_Click(object sender, EventArgs e)
         {
+            flag_SaveOK = false;
             // 将事件绑定
             pixivBrowser.DocumentCompleted += new WebBrowserDocumentCompletedEventHandler(pixivBrowser_DecumentCompleted);
 
